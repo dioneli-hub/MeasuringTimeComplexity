@@ -8,8 +8,8 @@ using namespace std::chrono;
 
 const int MAX_RANDOM_VALUE = 1000;
 const int RANDOM_PRECISION_NUMBERS = 2;
-const int ARRAY_SIZE = 50;
-const int COUNT_OF_TESTS = 5;
+const int ARRAY_SIZE = 5000;
+const int COUNT_OF_TESTS = 6;
 
 template <typename TElement>
 TElement* generate_array(int size, TElement(*generate)()) {
@@ -129,7 +129,7 @@ void merge(TElement* arr, int p, int q, int r, int sizeOfArray, bool(*comparer)(
         arr[i] = buffer[--k];
     }
 
-    delete buffer;
+    delete[] buffer;
 }
 
 template <typename TElement>
@@ -279,23 +279,23 @@ void demo_bubble_sort() {
         float* arr = generate_array<float>(sizeOfArray, float_number_generator);
 
         steady_clock::time_point random_start = high_resolution_clock::now();
-        bubble_sort<float>(arr, sizeOfArray, float_ascending_comparer);
+        bubble_sort<float>(arr, sizeOfArray, float_descending_comparer);
         steady_clock::time_point random_stop = high_resolution_clock::now();
 
         steady_clock::time_point sorted_start = high_resolution_clock::now();
-        bubble_sort<float>(arr, sizeOfArray, float_ascending_comparer);
+        bubble_sort<float>(arr, sizeOfArray, float_descending_comparer);
         steady_clock::time_point sorted_stop = high_resolution_clock::now();
 
-        bubble_sort<float>(arr, sizeOfArray, float_descending_comparer);
-        steady_clock::time_point reversed_start = high_resolution_clock::now();
         bubble_sort<float>(arr, sizeOfArray, float_ascending_comparer);
+        steady_clock::time_point reversed_start = high_resolution_clock::now();
+        bubble_sort<float>(arr, sizeOfArray, float_descending_comparer);
         steady_clock::time_point reversed_stop = high_resolution_clock::now();
 
 
         cout << endl
             << "Bubble sort. Test #" << i + 1 << "." << endl
             << "\t-size of array: " << sizeOfArray << endl
-            << "\t-radom array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
+            << "\t-random array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
             << "\t-sorted array sort time: " << duration_cast<nanoseconds>(sorted_stop - sorted_start).count() << " nanoseconds" << endl
             << "\t-reversed array sort time: " << duration_cast<nanoseconds>(reversed_stop - reversed_start).count() << " nanoseconds" << endl
             << endl;
@@ -309,23 +309,22 @@ void demo_insertion_sort() {
         float* arr = generate_array<float>(sizeOfArray, float_number_generator);
 
         steady_clock::time_point random_start = high_resolution_clock::now();
-        insertion_sort<float>(arr, sizeOfArray, float_ascending_comparer);
+        insertion_sort<float>(arr, sizeOfArray, float_descending_comparer);
         steady_clock::time_point random_stop = high_resolution_clock::now();
 
         steady_clock::time_point sorted_start = high_resolution_clock::now();
-        insertion_sort<float>(arr, sizeOfArray, float_ascending_comparer);
+        insertion_sort<float>(arr, sizeOfArray, float_descending_comparer);
         steady_clock::time_point sorted_stop = high_resolution_clock::now();
 
-        insertion_sort<float>(arr, sizeOfArray, float_descending_comparer);
-        steady_clock::time_point reversed_start = high_resolution_clock::now();
         insertion_sort<float>(arr, sizeOfArray, float_ascending_comparer);
+        steady_clock::time_point reversed_start = high_resolution_clock::now();
+        insertion_sort<float>(arr, sizeOfArray, float_descending_comparer);
         steady_clock::time_point reversed_stop = high_resolution_clock::now();
-
 
         cout << endl
             << "Insertion sort. Test #" << i + 1 << "." << endl
             << "\t-size of array: " << sizeOfArray << endl
-            << "\t-radom array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
+            << "\t-random array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
             << "\t-sorted array sort time: " << duration_cast<nanoseconds>(sorted_stop - sorted_start).count() << " nanoseconds" << endl
             << "\t-reversed array sort time: " << duration_cast<nanoseconds>(reversed_stop - reversed_start).count() << " nanoseconds" << endl
             << endl;
@@ -355,7 +354,7 @@ void demo_selection_sort() {
         cout << endl
             << "Selection sort. Test #" << i + 1 << "." << endl
             << "\t-size of array: " << sizeOfArray << endl
-            << "\t-radom array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
+            << "\t-random array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
             << "\t-sorted array sort time: " << duration_cast<nanoseconds>(sorted_stop - sorted_start).count() << " nanoseconds" << endl
             << "\t-reversed array sort time: " << duration_cast<nanoseconds>(reversed_stop - reversed_start).count() << " nanoseconds" << endl
             << endl;
@@ -381,6 +380,7 @@ void demo_quick_sort() {
         quick_sort<float>(arr, 0, sizeOfArray - 1, float_ascending_comparer, float_equal_comparer);
         steady_clock::time_point reversed_stop = high_resolution_clock::now();
 
+        delete[] arr;
 
         cout << endl
             << "Selection sort. Test #" << i + 1 << "." << endl
@@ -389,6 +389,8 @@ void demo_quick_sort() {
             << "\t-sorted array sort time: " << duration_cast<nanoseconds>(sorted_stop - sorted_start).count() << " nanoseconds" << endl
             << "\t-reversed array sort time: " << duration_cast<nanoseconds>(reversed_stop - reversed_start).count() << " nanoseconds" << endl
             << endl;
+
+        
     }
 }
 
@@ -424,15 +426,22 @@ void demo_merge_sort() {
 
 int main()
 {
-
-    demo_linear_search();
-    demo_binary_search();
+    
+    demo_quick_sort();
+    
+    /*
+    * demo_linear_search();
+    * demo_binary_search();
+    * 
     demo_bubble_sort();
     demo_insertion_sort();
     demo_selection_sort();
+
     demo_quick_sort();
     demo_merge_sort();
 
+    */
+    
     return 0;
 }
 
