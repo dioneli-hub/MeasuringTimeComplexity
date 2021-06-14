@@ -8,7 +8,7 @@ using namespace std::chrono;
 
 const int MAX_RANDOM_VALUE = 1000;
 const int RANDOM_PRECISION_NUMBERS = 2;
-const int ARRAY_SIZE = 5000;
+const int ARRAY_SIZE = 600;
 const int COUNT_OF_TESTS = 6;
 
 template <typename TElement>
@@ -226,7 +226,8 @@ void demo_linear_search() {
         int sizeOfArray = (i + 1) * ARRAY_SIZE;
         float* arr = generate_array<float>(sizeOfArray, float_number_generator);
 
-        int random_index = int_number_generator(sizeOfArray);
+        //int random_index = int_number_generator(sizeOfArray);
+        int random_index = sizeOfArray/2;
 
         cout << endl
             << "Linear search. Test #" << i + 1 << "." << endl
@@ -383,7 +384,7 @@ void demo_quick_sort() {
         delete[] arr;
 
         cout << endl
-            << "Selection sort. Test #" << i + 1 << "." << endl
+            << "Quick sort. Test #" << i + 1 << "." << endl
             << "\t-size of array: " << sizeOfArray << endl
             << "\t-radom array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
             << "\t-sorted array sort time: " << duration_cast<nanoseconds>(sorted_stop - sorted_start).count() << " nanoseconds" << endl
@@ -415,7 +416,7 @@ void demo_merge_sort() {
 
 
         cout << endl
-            << "Selection sort. Test #" << i + 1 << "." << endl
+            << "Merge sort. Test #" << i + 1 << "." << endl
             << "\t-size of array: " << sizeOfArray << endl
             << "\t-radom array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
             << "\t-sorted array sort time: " << duration_cast<nanoseconds>(sorted_stop - sorted_start).count() << " nanoseconds" << endl
@@ -426,9 +427,14 @@ void demo_merge_sort() {
 
 int main()
 {
-    
+
+    //demo_bubble_sort();
+    //demo_merge_sort();
+    //demo_binary_search();
+    //demo_quick_sort();
+    //demo_linear_search();
     demo_quick_sort();
-    
+
     /*
     * demo_linear_search();
     * demo_binary_search();
