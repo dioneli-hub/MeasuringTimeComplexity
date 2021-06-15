@@ -1,6 +1,7 @@
 ﻿#include <chrono>
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 using namespace std::chrono;
@@ -8,7 +9,7 @@ using namespace std::chrono;
 
 const int MAX_RANDOM_VALUE = 1000;
 const int RANDOM_PRECISION_NUMBERS = 2;
-const int ARRAY_SIZE = 600;
+const int ARRAY_SIZE = 15;
 const int COUNT_OF_TESTS = 6;
 
 template <typename TElement>
@@ -169,6 +170,7 @@ int partition(TElement* arr, int low, int high, bool(*comparer)(TElement, TEleme
     return (i + 1);
 }
 
+/*
 template <typename TElement>
 void quick_sort(TElement* arr, int low, int high, bool(*comparer)(TElement, TElement),
     bool(*equal)(TElement, TElement)) {
@@ -179,6 +181,48 @@ void quick_sort(TElement* arr, int low, int high, bool(*comparer)(TElement, TEle
         quick_sort(arr, pivot + 1, high, comparer, equal);
     }
 }
+*/
+
+struct Range {
+    int start;
+    int end;
+
+    Range(int newStart, int newEnd) : start(newStart), end(newEnd) {}
+};
+
+template <typename TElement>
+void quick_sort(TElement* arr, int start, int end, bool(*comparer)(TElement, TElement),
+    bool(*equal)(TElement, TElement))
+{
+    queue<Range>  queue;
+    queue.push(Range(start, end));
+
+    while (!queue.empty())
+    {
+        Range next = queue.front();
+        queue.pop();
+
+        int start = next.start;
+        int end = next.end;
+        int wall = start;
+
+        if (start < end)
+        {
+            for (int i = start; i < end; i++)
+            {
+                if (comparer(arr[i], arr[end]) || equal(arr[i], arr[end]))
+                {
+                    swap(&arr[wall], &arr[i]);
+                    wall++;
+                }
+            }
+            swap(&arr[end], &arr[wall]);
+            queue.push(Range(start, --wall));
+            queue.push(Range(++wall, end));
+        }
+    }
+}
+
 
 template <typename TElement>
 int linear_search(TElement* arr, TElement target, int sizeOfArray, bool(*equal)(TElement, TElement)) {
@@ -386,7 +430,7 @@ void demo_quick_sort() {
         cout << endl
             << "Quick sort. Test #" << i + 1 << "." << endl
             << "\t-size of array: " << sizeOfArray << endl
-            << "\t-radom array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
+            << "\t-random array sort time: " << duration_cast<nanoseconds>(random_stop - random_start).count() << " nanoseconds" << endl
             << "\t-sorted array sort time: " << duration_cast<nanoseconds>(sorted_stop - sorted_start).count() << " nanoseconds" << endl
             << "\t-reversed array sort time: " << duration_cast<nanoseconds>(reversed_stop - reversed_start).count() << " nanoseconds" << endl
             << endl;
