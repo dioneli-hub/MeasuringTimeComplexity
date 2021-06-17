@@ -7,10 +7,10 @@ using namespace std;
 using namespace std::chrono;
 
 
-const int MAX_RANDOM_VALUE = 1000000;
-const int RANDOM_PRECISION_NUMBERS = 6;
-const int ARRAY_SIZE = 10000000;
-const int COUNT_OF_TESTS = 10;
+const int MAX_RANDOM_VALUE = 1000;
+const int RANDOM_PRECISION_NUMBERS = 2;
+const int ARRAY_SIZE = 1000;
+const int COUNT_OF_TESTS = 6;
 
 template <typename TElement>
 TElement* generate_array(int size, TElement(*generate)()) {
@@ -363,12 +363,12 @@ void demo_insertion_sort() {
         steady_clock::time_point sorted_start = high_resolution_clock::now();
         insertion_sort<float>(arr, sizeOfArray, float_descending_comparer);
         steady_clock::time_point sorted_stop = high_resolution_clock::now();
-
+        
         insertion_sort<float>(arr, sizeOfArray, float_ascending_comparer);
         steady_clock::time_point reversed_start = high_resolution_clock::now();
         insertion_sort<float>(arr, sizeOfArray, float_descending_comparer);
         steady_clock::time_point reversed_stop = high_resolution_clock::now();
-
+        
         cout << endl
             << "Insertion sort. Test #" << i + 1 << "." << endl
             << "\t-size of array: " << sizeOfArray << endl
@@ -474,26 +474,16 @@ void demo_merge_sort() {
 
 int main()
 {
-
-    //demo_bubble_sort();
-    //demo_merge_sort();
-    //demo_binary_search();
-    //demo_quick_sort();
     demo_linear_search();
-    //demo_quick_sort();
-
-    /*
-    * demo_linear_search();
-    * demo_binary_search();
-    * 
+    demo_binary_search();
+     
     demo_bubble_sort();
     demo_insertion_sort();
     demo_selection_sort();
 
     demo_quick_sort();
     demo_merge_sort();
-
-    */
+    
     
     return 0;
 }
